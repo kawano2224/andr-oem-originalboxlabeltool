@@ -125,7 +125,7 @@ body{
 #previewJan{
     position:absolute;
 
-    left:46%;
+    left:43%;
     transform:translateX(-50%);
 
     top:375px;          /* ←上下位置（buttomではなくtopがおすすめ） */
