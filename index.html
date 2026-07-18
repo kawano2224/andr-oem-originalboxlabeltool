@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ダンボール表記作成ツール</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- 左側 -->
+    <div class="left-panel">
+
+        <h1>ダンボール表記作成ツール</h1>
+
+        <label>クライアント名</label>
+<select id="client">
+    <option value="株式会社横浜DeNAベイスターズ">横浜DeNAベイスターズ</option>
+    <option value="群馬クレインサンダーズ">群馬クレインサンダーズ</option>
+    <option value="株式会社ヤクルト球団">東京ヤクルトスワローズ</option>
+        <option value="株式会社 阪神タイガース">阪神タイガース</option>
+    <option value="カルチュア・エクスペリエンス株式会社">カルチュア・エクスペリエンス</option>
+</select>
+
+        <input id="clientOther" placeholder="その他の場合はこちらへ入力">
+
+
+<div id="clientButtons" class="hidden">
+    <button id="addClient">＋クライアント名追加</button>
+    <button id="deleteClient" style="display:none;">－クライアント名削除</button>
+</div>
+<div class="labelRow">
+
+    <label for="product">商品名</label>
+
+<select id="productSize">
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+    <option value="14">14</option>
+    <option value="16">16</option>
+    <option value="18">18</option>
+    <option value="20">20</option>
+    <option value="24">24</option>
+</select>
+
+</div>
+
+<input id="product">
+
+ <label>JANコード</label>
+<input
+    type="text"
+    id="jan"
+    maxlength="13"
+    inputmode="numeric"
+    pattern="[0-9]*">
+
+<div class="labelRow">
+
+    <label for="imageUpload">商品画像</label>
+
+    <div class="imageControls">
+
+        <button type="button" id="imageMinus">－</button>
+
+        <span id="imageScaleText">100%</span>
+
+        <button type="button" id="imagePlus">＋</button>
+        <input 
+  type="range" 
+  id="imageScaleSlider"
+  min="50"
+  max="200"
+  value="100">
+
+<div class="moveControls">
+
+    <button type="button" id="imageUp">▲</button>
+
+    <button type="button" id="imageLeft">◀</button>
+
+    <button type="button" id="imageRight">▶</button>
+
+    <button type="button" id="imageDown">▼</button>
+
+</div>
+
+    </div>
+
+</div>
+
+<input type="file" id="imageUpload" accept="image/*">
+
+<button id="PDFbutton">PDF出力</button>
+
+    </div>
+
+    <!-- 右側 -->
+    <div class="right-panel">
+
+        <div class="preview">
+
+    <!-- テンプレート画像 -->
+<img src="assets/template-preview.png" id="template">
+
+    <!-- 商品画像 -->
+ <div id="imageArea">
+    <img id="previewImage" alt="">
+</div>
+
+    <!-- クライアント名 -->
+    <div id="previewClient"></div>
+
+    <!-- 商品名 -->
+    <div id="previewProduct"></div>
+
+    <!-- JANコード -->
+    <div id="previewJan"></div>
+
+
+</div>
+
+    </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script src="app.js"></script>
+
+</body>
+
+</html>
