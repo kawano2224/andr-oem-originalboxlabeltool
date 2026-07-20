@@ -5,15 +5,49 @@ const clientSelect = document.getElementById("client");
 const clientOther = document.getElementById("clientOther");
 
 // ==========================
-// 保存済みクライアント読み込み
+// Googleスプレッドシートからクライアント取得
 // ==========================
 
-const savedClients = JSON.parse(
-    localStorage.getItem("customClients") || "[]"
-);
+const CLIENT_API_URL = "https://script.google.com/a/macros/and-r.co.jp/s/AKfycbzVSG8VjT_0lQ73q2V0xvrClBPsEDxK4LB6HXVnOgbYLPWhfZAyo7c2Zh3GVugxmGzL/exec";
+
+fetch(CLIENT_API_URL)
+  .then(res => res.json())
+  .then(clients => {
+
+    clients.forEach(name => {
+
+      const option = document.createElement("option");
+
+      option.value = name;
+      option.textContent = name;
+      option.dataset.custom = "true";
+
+      clientSelect.appendChild(option);
+
+    });
+
+  })
+  .catch(error => {
+    console.error("取得エラー", error);
+  });
+
+    console.error("取得エラー", error);
+
+});
+const CLIENT_API_URL = "https://script.google.com/a/macros/and-r.co.jp/s/AKfycbzVSG8VjT_0lQ73q2V0xvrClBPsEDxK4LB6HXVnOgbYLPWhfZAyo7c2Zh3GVugxmGzL/exec";
 
 
-savedClients.forEach(name => {
+
+fetch(CLIENT_API_URL)
+.then(res => res.json())
+.then(clients => {
+
+    clients.forEach(name => {
+
+})
+.catch(error => {
+    console.error("取得エラー", error);
+});
 
     const option = document.createElement("option");
 
@@ -339,18 +373,13 @@ addClient.addEventListener("click", () => {
 
 
     // ★ここが保存処理
-    let savedClients =
-        JSON.parse(localStorage.getItem("customClients") || "[]");
-
-
-    savedClients.push(name);
-
-
-    localStorage.setItem(
-        "customClients",
-        JSON.stringify(savedClients)
-    );
-
+fetch(CLIENT_API_URL,{
+    method:"POST",
+    body:JSON.stringify({
+        action:"add",
+        name:name
+    })
+});
 
     // ボタン表示更新
     clientSelect.dispatchEvent(
@@ -381,18 +410,14 @@ deleteClient.addEventListener("click", () => {
 
     option.remove();
     // 保存データからも削除
-let savedClients =
-    JSON.parse(localStorage.getItem("customClients") || "[]");
 
-
-savedClients =
-    savedClients.filter(name => name !== option.value);
-
-
-localStorage.setItem(
-    "customClients",
-    JSON.stringify(savedClients)
-);
+fetch(CLIENT_API_URL,{
+    method:"POST",
+    body:JSON.stringify({
+        action:"delete",
+        name:option.value
+    })
+});
 
     clientSelect.selectedIndex = 0;
     updateClient();
