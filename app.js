@@ -8,7 +8,8 @@ const clientOther = document.getElementById("clientOther");
 // Googleスプレッドシートからクライアント取得
 // ==========================
 
-const CLIENT_API_URL = "https://script.google.com/a/macros/and-r.co.jp/s/AKfycbzVSG8VjT_0lQ73q2V0xvrClBPsEDxK4LB6HXVnOgbYLPWhfZAyo7c2Zh3GVugxmGzL/exec";
+const CLIENT_API_URL =
+"https://script.google.com/a/macros/and-r.co.jp/s/AKfycbyLKj7j_TdCU-O-kEhfGful2yxz_pRFHczCot-DVNb6uyHTONg8LsCiQbrJIsAd4VKW/exec";
 
 fetch(CLIENT_API_URL)
   .then(res => res.json())
