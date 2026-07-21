@@ -107,8 +107,21 @@ function updateJan() {
 // イベント
 // ==========================
 clientSelect.addEventListener("change", () => {
-    clientButtons.classList.add("hidden");
+
+    if (clientSelect.value === "") {
+
+        clientButtons.classList.add("hidden");
+
+    } else {
+
+        clientButtons.classList.remove("hidden");
+        addClient.style.display = "none";
+        deleteClient.style.display = "inline-block";
+
+    }
+
     updateClient();
+
 });
 
 clientOther.addEventListener("input", updateClient);
