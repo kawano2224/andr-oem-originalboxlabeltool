@@ -9,57 +9,29 @@ const clientOther = document.getElementById("clientOther");
 // ==========================
 
 const CLIENT_API_URL =
-"https://script.google.com/a/macros/and-r.co.jp/s/AKfycbyLKj7j_TdCU-O-kEhfGful2yxz_pRFHczCot-DVNb6uyHTONg8LsCiQbrJIsAd4VKW/exec";
+"https://script.google.com/macros/s/AKfycbyLKj7j_TdCU-O-kEhfGful2yxz_pRFHczCot-DVNb6uyHTONg8LsCiQbrJIsAd4VKW/exec";
 
 fetch(CLIENT_API_URL)
   .then(res => res.json())
   .then(clients => {
-
-    clients.forEach(name => {
-
-      const option = document.createElement("option");
-
-      option.value = name;
-      option.textContent = name;
-      option.dataset.custom = "true";
-
-      clientSelect.appendChild(option);
-
-    });
-
-  })
-  .catch(error => {
-    console.error("取得エラー", error);
-  });
-
-    console.error("取得エラー", error);
-
-});
-const CLIENT_API_URL = "https://script.google.com/a/macros/and-r.co.jp/s/AKfycbzVSG8VjT_0lQ73q2V0xvrClBPsEDxK4LB6HXVnOgbYLPWhfZAyo7c2Zh3GVugxmGzL/exec";
-
-
-
-fetch(CLIENT_API_URL)
-.then(res => res.json())
-.then(clients => {
-
-    clients.forEach(name => {
-
-})
-.catch(error => {
-    console.error("取得エラー", error);
-});
+    
+clients.forEach(name => {
 
     const option = document.createElement("option");
 
     option.value = name;
     option.textContent = name;
-    option.dataset.custom = "true";
 
     clientSelect.appendChild(option);
 
 });
 
+updateClient();
+
+  })
+  .catch(error => {
+    console.error("取得エラー", error);
+  });
 
 const productInput = document.getElementById("product");
 const productSize = document.getElementById("productSize");
@@ -135,29 +107,11 @@ function updateJan() {
 // イベント
 // ==========================
 clientSelect.addEventListener("change", () => {
-
-    const option = clientSelect.options[clientSelect.selectedIndex];
-
-    // 追加したクライアントだけ削除ボタンを表示
-    if (option.dataset.custom === "true") {
-
-        clientButtons.classList.remove("hidden");
-        addClient.style.display = "none";
-        deleteClient.style.display = "inline-block";
-
-    } else {
-
-        clientButtons.classList.add("hidden");
-
-    }
-
-    // プレビュー更新
+    clientButtons.classList.add("hidden");
     updateClient();
-
 });
 
 clientOther.addEventListener("input", updateClient);
-
 productInput.addEventListener("input", updateProduct);
 productSize.addEventListener("change", updateProductSize);
 
@@ -356,7 +310,6 @@ addClient.addEventListener("click", () => {
 
     option.value = name;
     option.textContent = name;
-    option.dataset.custom = "true";
 
     clientSelect.appendChild(option);
 
@@ -380,7 +333,8 @@ fetch(CLIENT_API_URL,{
         action:"add",
         name:name
     })
-});
+})
+.then(() => location.reload());
 
     // ボタン表示更新
     clientSelect.dispatchEvent(
@@ -400,11 +354,6 @@ deleteClient.addEventListener("click", () => {
     if (!option) return;
 
     // 追加したクライアントだけ削除できる
-    if (option.dataset.custom !== "true") {
-        alert("追加したクライアントのみ削除できます。");
-        return;
-    }
-
     if (!confirm("「" + option.text + "」を削除しますか？")) {
         return;
     }
@@ -418,7 +367,8 @@ fetch(CLIENT_API_URL,{
         action:"delete",
         name:option.value
     })
-});
+})
+.then(() => location.reload());
 
     clientSelect.selectedIndex = 0;
     updateClient();
