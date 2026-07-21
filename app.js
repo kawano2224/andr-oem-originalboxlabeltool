@@ -9,7 +9,7 @@ const clientOther = document.getElementById("clientOther");
 // ==========================
 
 const CLIENT_API_URL =
-"https://script.google.com/macros/s/AKfycbyLKj7j_TdCU-O-kEhfGful2yxz_pRFHczCot-DVNb6uyHTONg8LsCiQbrJIsAd4VKW/exec";
+"https://script.google.com/macros/s/AKfycbz9yQZwJUgUDTcS9QfdoRtUi4UCThgyUaX0A_zziIfCmTghI_VtT_ZNVyDAoti8LnDD/exec";
 
 fetch(CLIENT_API_URL)
   .then(res => res.json())
