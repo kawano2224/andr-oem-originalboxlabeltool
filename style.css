@@ -153,10 +153,6 @@ input[type="file"]{
     cursor:pointer;
 }
 
-.hidden{
-    display:none;
-}
-
 #clientButtons{
 
     display:flex;
@@ -246,17 +242,6 @@ input[type="file"]{
 
     font-size:13px;
     font-weight:bold;
-
-}
-.moveControls{
-
-    display:grid;
-
-    grid-template-columns:30px 30px 30px;
-
-    grid-template-rows:25px 25px 25px;
-
-    gap:2px;
 
 }
 
