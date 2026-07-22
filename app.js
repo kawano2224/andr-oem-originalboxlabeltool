@@ -9,29 +9,40 @@ const clientOther = document.getElementById("clientOther");
 // ==========================
 
 const CLIENT_API_URL =
-"https://script.google.com/macros/s/AKfycbz9yQZwJUgUDTcS9QfdoRtUi4UCThgyUaX0A_zziIfCmTghI_VtT_ZNVyDAoti8LnDD/exec";
+"hhttps://script.google.com/a/macros/and-r.co.jp/s/AKfycbz9yQZwJUgUDTcS9QfdoRtUi4UCThgyUaX0A_zziIfCmTghI_VtT_ZNVyDAoti8LnDD/exec";
 
-fetch(CLIENT_API_URL)
-  .then(res => res.json())
-  .then(clients => {
-    
-clients.forEach(name => {
+async function loadClients() {
+  try {
+    const response = await fetch(CLIENT_API_URL);
 
-    const option = document.createElement("option");
+    if (!response.ok) {
+      throw new Error(`通信エラー: ${response.status}`);
+    }
 
-    option.value = name;
-    option.textContent = name;
+    const result = await response.json();
 
-    clientSelect.appendChild(option);
+    if (!result.success) {
+      throw new Error(result.error || "クライアント取得に失敗しました");
+    }
 
-});
+    result.clients.forEach(name => {
+      const option = document.createElement("option");
 
-updateClient();
+      option.value = name;
+      option.textContent = name;
 
-  })
-  .catch(error => {
-    console.error("取得エラー", error);
-  });
+      clientSelect.appendChild(option);
+    });
+
+    updateClient();
+
+  } catch (error) {
+    console.error("取得エラー:", error);
+    alert("クライアント一覧を取得できませんでした。");
+  }
+}
+
+loadClients();
 
 const productInput = document.getElementById("product");
 const productSize = document.getElementById("productSize");
@@ -298,94 +309,113 @@ imageRight.addEventListener("click",()=>{
 // ==========================
 const addClient = document.getElementById("addClient");
 
-addClient.addEventListener("click", () => {
+addClient.addEventListener("click", async () => {
+  const name = clientOther.value.trim();
 
-    const name = clientOther.value.trim();
+  if (name === "") {
+    return;
+  }
 
-    if(name === "") return;
+  // 重複チェック
+  for (const option of clientSelect.options) {
+    if (option.value.trim() === name) {
+      alert("すでに登録されています。");
+      return;
+    }
+  }
 
+  addClient.disabled = true;
 
-    // 重複チェック
-    for(let option of clientSelect.options){
+  try {
+    const response = await fetch(CLIENT_API_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        action: "add",
+        name: name
+      })
+    });
 
-        if(option.value === name){
-
-            alert("すでに登録されています。");
-            return;
-
-        }
-
+    if (!response.ok) {
+      throw new Error(`通信エラー: ${response.status}`);
     }
 
+    const result = await response.json();
 
-    // プルダウン追加
-    const option = document.createElement("option");
+    if (!result.success) {
+      throw new Error(result.error || "追加に失敗しました");
+    }
 
-    option.value = name;
-    option.textContent = name;
+    alert(`「${name}」を追加しました。`);
 
-    clientSelect.appendChild(option);
+    // スプレッドシートから最新情報を読み直す
+    location.reload();
 
+  } catch (error) {
+    console.error("追加エラー:", error);
+    alert(`追加できませんでした。\n${error.message}`);
 
-    // 選択
-    clientSelect.value = name;
-
-
-    // プレビュー更新
-    updateClient();
-
-
-    // 入力欄クリア
-    clientOther.value = "";
-
-
-    // ★ここが保存処理
-fetch(CLIENT_API_URL,{
-    method:"POST",
-    body:JSON.stringify({
-        action:"add",
-        name:name
-    })
-})
-.then(() => location.reload());
-
-    // ボタン表示更新
-    clientSelect.dispatchEvent(
-        new Event("change")
-    );
-
+  } finally {
+    addClient.disabled = false;
+  }
 });
+
+
 // ==========================
 // クライアント削除
 // ==========================
 const deleteClient = document.getElementById("deleteClient");
 
-deleteClient.addEventListener("click", () => {
+deleteClient.addEventListener("click", async () => {
+  const selectedIndex = clientSelect.selectedIndex;
 
-    const option = clientSelect.options[clientSelect.selectedIndex];
+  if (selectedIndex < 0) {
+    return;
+  }
 
-    if (!option) return;
+  const option = clientSelect.options[selectedIndex];
+  const name = option.value.trim();
 
-    // 追加したクライアントだけ削除できる
-    if (!confirm("「" + option.text + "」を削除しますか？")) {
-        return;
+  // 空の初期選択肢は削除しない
+  if (name === "") {
+    return;
+  }
+
+  if (!confirm(`「${name}」を削除しますか？`)) {
+    return;
+  }
+
+  deleteClient.disabled = true;
+
+  try {
+    const response = await fetch(CLIENT_API_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        action: "delete",
+        name: name
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`通信エラー: ${response.status}`);
     }
 
-    option.remove();
-    // 保存データからも削除
+    const result = await response.json();
 
-fetch(CLIENT_API_URL,{
-    method:"POST",
-    body:JSON.stringify({
-        action:"delete",
-        name:option.value
-    })
-})
-.then(() => location.reload());
+    if (!result.success) {
+      throw new Error(result.error || "削除に失敗しました");
+    }
 
-    clientSelect.selectedIndex = 0;
-    updateClient();
+    alert(`「${name}」を削除しました。`);
 
+    location.reload();
+
+  } catch (error) {
+    console.error("削除エラー:", error);
+    alert(`削除できませんでした。\n${error.message}`);
+
+  } finally {
+    deleteClient.disabled = false;
+  }
 });
 // ==========================
 // PDF出力
