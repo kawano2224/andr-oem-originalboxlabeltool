@@ -9,21 +9,7 @@ const clientOther = document.getElementById("clientOther");
 // ==========================
 
 const CLIENT_API_URL =
-"hhttps://script.google.com/a/macros/and-r.co.jp/s/AKfycbz9yQZwJUgUDTcS9QfdoRtUi4UCThgyUaX0A_zziIfCmTghI_VtT_ZNVyDAoti8LnDD/exec";
-
-async function loadClients() {
-  try {
-    const response = await fetch(CLIENT_API_URL);
-
-    if (!response.ok) {
-      throw new Error(`通信エラー: ${response.status}`);
-    }
-
-    const result = await response.json();
-
-    if (!result.success) {
-      throw new Error(result.error || "クライアント取得に失敗しました");
-    }
+"https://script.google.com/a/macros/and-r.co.jp/s/AKfycbz9yQZwJUgUDTcS9QfdoRtUi4UCThgyUaX0A_zziIfCmTghI_VtT_ZNVyDAoti8LnDD/exec";
 
 async function loadClients() {
   try {
