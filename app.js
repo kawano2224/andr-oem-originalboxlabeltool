@@ -3,6 +3,18 @@
 // ==========================
 const clientSelect = document.getElementById("client");
 const clientOther = document.getElementById("clientOther");
+const clientButtons = document.getElementById("clientButtons");
+const addClient = document.getElementById("addClient");
+const deleteClient = document.getElementById("deleteClient");
+
+const productInput = document.getElementById("product");
+const productSize = document.getElementById("productSize");
+const janInput = document.getElementById("jan");
+
+// プレビュー
+const previewClient = document.getElementById("previewClient");
+const previewProduct = document.getElementById("previewProduct");
+const previewJan = document.getElementById("previewJan");
 
 // ==========================
 // Googleスプレッドシートからクライアント取得
