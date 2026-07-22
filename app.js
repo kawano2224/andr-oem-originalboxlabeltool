@@ -66,15 +66,6 @@ async function loadClients() {
 }
 
 
-const productInput = document.getElementById("product");
-const productSize = document.getElementById("productSize");
-const janInput = document.getElementById("jan");
-
-// プレビュー
-const previewClient = document.getElementById("previewClient");
-const previewProduct = document.getElementById("previewProduct");
-const previewJan = document.getElementById("previewJan");
-
 // ここで実行
 loadClients();
 
@@ -91,7 +82,7 @@ function updateClient(){
         previewClient.textContent = clientSelect.value;
     }
 
-}const clientButtons = document.getElementById("clientButtons");
+}
 
 clientOther.addEventListener("input", () => {
 
@@ -332,7 +323,6 @@ imageRight.addEventListener("click",()=>{
 // ==========================
 // クライアント追加
 // ==========================
-const addClient = document.getElementById("addClient");
 
 addClient.addEventListener("click", async () => {
   const name = clientOther.value.trim();
@@ -388,7 +378,6 @@ addClient.addEventListener("click", async () => {
 // ==========================
 // クライアント削除
 // ==========================
-const deleteClient = document.getElementById("deleteClient");
 
 deleteClient.addEventListener("click", async () => {
   const selectedIndex = clientSelect.selectedIndex;
