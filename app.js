@@ -20,7 +20,7 @@ const previewJan = document.getElementById("previewJan");
 // Googleスプレッドシートからクライアント取得
 // ==========================
 const CLIENT_API_URL =
-  "https://script.google.com/a/macros/and-r.co.jp/s/AKfycbz9yQZwJUgUDTcS9QfdoRtUi4UCThgyUaX0A_zziIfCmTghI_VtT_ZNVyDAoti8LnDD/exec";
+  "https://script.google.com/macros/s/AKfycbz9yQZwJUgUDTcS9QfdoRtUi4UCThgyUaX0A_zziIfCmTghI_VtT_ZNVyDAoti8LnDD/exec";
 
 async function loadClients() {
   try {
