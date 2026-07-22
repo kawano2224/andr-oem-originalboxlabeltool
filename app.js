@@ -7,13 +7,14 @@ const clientOther = document.getElementById("clientOther");
 // ==========================
 // Googleスプレッドシートからクライアント取得
 // ==========================
-
 const CLIENT_API_URL =
-"https://script.google.com/a/macros/and-r.co.jp/s/AKfycbz9yQZwJUgUDTcS9QfdoRtUi4UCThgyUaX0A_zziIfCmTghI_VtT_ZNVyDAoti8LnDD/exec";
+  "https://script.google.com/a/macros/and-r.co.jp/s/AKfycbz9yQZwJUgUDTcS9QfdoRtUi4UCThgyUaX0A_zziIfCmTghI_VtT_ZNVyDAoti8LnDD/exec";
 
 async function loadClients() {
   try {
-    const response = await fetch(CLIENT_API_URL);
+    const response = await fetch(
+      `${CLIENT_API_URL}?t=${Date.now()}`
+    );
 
     if (!response.ok) {
       throw new Error(`通信エラー: ${response.status}`);
@@ -27,7 +28,7 @@ async function loadClients() {
       );
     }
 
-    // ここでプルダウンを一度空にする
+    // プルダウンを一度空にする
     clientSelect.innerHTML =
       '<option value="">選択してください</option>';
 
@@ -45,19 +46,13 @@ async function loadClients() {
 
   } catch (error) {
     console.error("取得エラー:", error);
-    alert("クライアント一覧を取得できませんでした。");
+    alert(
+      "クライアント一覧を取得できませんでした。\n" +
+      error.message
+    );
   }
 }
 
-    updateClient();
-
-  } catch (error) {
-    console.error("取得エラー:", error);
-    alert("クライアント一覧を取得できませんでした。");
-  }
-}
-
-loadClients();
 
 const productInput = document.getElementById("product");
 const productSize = document.getElementById("productSize");
@@ -67,6 +62,9 @@ const janInput = document.getElementById("jan");
 const previewClient = document.getElementById("previewClient");
 const previewProduct = document.getElementById("previewProduct");
 const previewJan = document.getElementById("previewJan");
+
+// ここで実行
+loadClients();
 
 // ==========================
 // クライアント名更新
