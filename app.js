@@ -25,6 +25,27 @@ async function loadClients() {
       throw new Error(result.error || "クライアント取得に失敗しました");
     }
 
+async function loadClients() {
+  try {
+    const response = await fetch(CLIENT_API_URL);
+
+    if (!response.ok) {
+      throw new Error(`通信エラー: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (!result.success) {
+      throw new Error(
+        result.error || "クライアント取得に失敗しました"
+      );
+    }
+
+    // ここでプルダウンを一度空にする
+    clientSelect.innerHTML =
+      '<option value="">選択してください</option>';
+
+    // スプレッドシートの内容を追加する
     result.clients.forEach(name => {
       const option = document.createElement("option");
 
@@ -33,6 +54,14 @@ async function loadClients() {
 
       clientSelect.appendChild(option);
     });
+
+    updateClient();
+
+  } catch (error) {
+    console.error("取得エラー:", error);
+    alert("クライアント一覧を取得できませんでした。");
+  }
+}
 
     updateClient();
 
