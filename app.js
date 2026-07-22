@@ -24,9 +24,15 @@ const CLIENT_API_URL =
 
 async function loadClients() {
   try {
-    const response = await fetch(
-      `${CLIENT_API_URL}?t=${Date.now()}`
-    );
+    
+ const response = await fetch(
+  `${CLIENT_API_URL}?t=${Date.now()}`,
+  {
+    method: "GET",
+    cache: "no-store",
+    redirect: "follow"
+  }
+);
 
     if (!response.ok) {
       throw new Error(`通信エラー: ${response.status}`);
