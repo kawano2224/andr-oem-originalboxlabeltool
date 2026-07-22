@@ -102,7 +102,6 @@ clientOther.addEventListener("input", () => {
     deleteClient.style.display = "none";
 
 });
-document.getElementById("clientOther").addEventListener("input", updateClient);
 // ==========================
 // 商品名更新
 // ==========================
